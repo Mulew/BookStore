@@ -29,18 +29,21 @@ router.get('/listbooks', async (req, res) => {
     }
 });
 
-router.get('/listbooks/:id', async (req, res) => {
+router.post('/listbooks/:id', async (req, res) => {
     try {
-      const books = await Bookmodel.findById(req.params.id);
-      res.json({
-        count: books.length,
-        data: books
-
-      });
-    } catch (err) {
+      const book = await Bookmodel.findById(req.params.id);
+      if (!book) {
+        return res.status(404).json({ message: 'Book not found' });
+      }
+      res.json({ data: book});
+    } 
+    catch (err) {
+      if (err.name === 'CastError') {
+        return res.status(400).json({ message: 'Invalid book ID' });
+      }
       res.status(500).json({ message: err.message });
     }
-});
+  });
 
 router.put('/updatebook/:id', async (req, res) => {
     const id = req.params.id;
@@ -50,8 +53,29 @@ router.put('/updatebook/:id', async (req, res) => {
       const updatedBook = await Bookmodel.findByIdAndUpdate(id,{ title,author},{ new: true });
 
       res.json(updatedBook);
-    } catch (err) {
-      res.status(404).json({ message: err.message });
-    }
+    } 
+    catch (err) {
+        if (err.name === 'CastError') {
+          return res.status(400).json({ message: 'Invalid book ID' });
+        }
+        res.status(500).json({ message: err.message });
+      }
   });
+
+router.delete('/deletebook/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        const deletebook = await Bookmodel.findByIdAndDelete(id);
+
+        if (!deletebook) {
+            return res.status(404).send("Book not deleted");
+        }
+        return res.status(201).json({ message: "Book deleted successfully!" });
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
 module.exports = router;
