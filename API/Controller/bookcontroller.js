@@ -3,7 +3,7 @@ const Bookmodel = require('../model/model');
 
 const router = express.Router();
 
-router.post('/addbook', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
       const { title, author, publishyear } = req.body;
   
@@ -16,7 +16,7 @@ router.post('/addbook', async (req, res) => {
     }
 });
 
-router.get('/listbooks', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const books = await Bookmodel.find();
       res.json({
@@ -29,7 +29,7 @@ router.get('/listbooks', async (req, res) => {
     }
 });
 
-router.post('/listbooks/:id', async (req, res) => {
+router.post('/:id', async (req, res) => {
     try {
       const book = await Bookmodel.findById(req.params.id);
       if (!book) {
@@ -44,8 +44,8 @@ router.post('/listbooks/:id', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
-
-router.put('/updatebook/:id', async (req, res) => {
+//put means update
+router.put('/:id', async (req, res) => {
     const id = req.params.id;
     const title = req.body.title;
     const author = req.body.author ;
@@ -62,7 +62,7 @@ router.put('/updatebook/:id', async (req, res) => {
       }
   });
 
-router.delete('/deletebook/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     const id = req.params.id;
     try {
         const deletebook = await Bookmodel.findByIdAndDelete(id);

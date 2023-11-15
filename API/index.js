@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 //lets create new book here
-app.use('/',route)
+app.use('/books',route)
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
