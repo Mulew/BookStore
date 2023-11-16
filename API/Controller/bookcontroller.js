@@ -17,16 +17,12 @@ router.post('/', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-    try {
-      const books = await Bookmodel.find();
-      res.json({
-        count: books.length,
-        data: books
-
-      });
-    } catch (err) {
-      res.status(500).json({ message: err.message });
-    }
+  try {
+    const books = await Bookmodel.find();
+    res.json(books);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 router.post('/:id', async (req, res) => {
