@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
 import Spinner from '../components/Spinner';
+import Back from '../components/Back';
 
 const ShowBook = () => {
   const { id } = useParams();
@@ -23,9 +24,11 @@ const ShowBook = () => {
   }, [id]);
 
   return (
+    
     <div className=" flex  flex-col p-4 justify-center ">
+
       <div className=" items-center mb-4 flex flex-col ">
-        <h1 className="text-2xl font-bold underline text-gray-800">Book Details</h1>
+        <h1 className="text-2xl font-bold underline text-gray-800">      <Back/> &nbsp;Book Details</h1>
       
       {loading ? (
         <Spinner/>

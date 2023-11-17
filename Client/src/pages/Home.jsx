@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import Spinner from '../components/Spinner';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -15,7 +16,6 @@ const Home = () => {
         const data = response.data;
         setBooks(data);
         setLoading(false);
-        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -29,7 +29,7 @@ const Home = () => {
         <h1 className="text-2xl font-bold">Book List</h1>
       </div>
       {loading ? (
-        <p>Loading...</p>
+        <Spinner/>
       ) : (
         <table className="w-full border-spacing-2 border-collapse">
           <thead>
