@@ -3,7 +3,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { FaPlus } from 'react-icons/fa';
 import Spinner from '../components/Spinner';
+import CreateBook from './CreateBook';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -26,7 +28,10 @@ const Home = () => {
   return (
     <div className="p-4">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Book List</h1>
+        <h1 className="text-2xl font-bold">Book List 
+        
+        <Link to='books/create'><FaPlus className='text-xl' /></Link></h1>
+
       </div>
       {loading ? (
         <Spinner/>

@@ -40,23 +40,24 @@ router.post('/:id', async (req, res) => {
       res.status(500).json({ message: err.message });
     }
   });
-//put means update
-router.put('/:id', async (req, res) => {
-    const id = req.params.id;
-    const title = req.body.title;
-    const author = req.body.author ;
-    try {
-      const updatedBook = await Bookmodel.findByIdAndUpdate(id,{ title,author},{ new: true });
-
-      res.json(updatedBook);
-    } 
-    catch (err) {
-        if (err.name === 'CastError') {
-          return res.status(400).json({ message: 'Invalid book ID' });
+  //put means update
+  router.put('/:id', async (req, res) => {
+      const id = req.params.id;
+      const title = req.body.title;
+      const author = req.body.author;
+      const publishyear = req.body.publishyear;
+      try {
+        const updatedBook = await Bookmodel.findByIdAndUpdate(id,{ title,author,publishyear},{ new: true });
+        res.json(updatedBook);
+      } 
+      catch (err) {
+          if (err.name === 'CastError') {
+            return res.status(400).json({ message: 'Invalid book ID' });
+          }
+          res.status(500).json({ message: err.message });
         }
-        res.status(500).json({ message: err.message });
-      }
-  });
+    });
+
 
 router.delete('/:id', async (req, res) => {
     const id = req.params.id;
