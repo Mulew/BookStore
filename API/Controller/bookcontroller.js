@@ -31,7 +31,7 @@ router.post('/:id', async (req, res) => {
       if (!book) {
         return res.status(404).json({ message: 'Book not found' });
       }
-      res.json({ data: book});
+      res.json(book);
     } 
     catch (err) {
       if (err.name === 'CastError') {

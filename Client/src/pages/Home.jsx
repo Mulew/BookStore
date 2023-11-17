@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 const Home = () => {
   const [books, setBooks] = useState([]);
@@ -13,7 +15,7 @@ const Home = () => {
         const data = response.data;
         setBooks(data);
         setLoading(false);
-        console.log(data)
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -22,29 +24,46 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="p-4">
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold">Book List</h1>
+      </div>
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <table>
+        <table className="w-full border-spacing-2 border-collapse">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Author</th>
-              <th>Genre</th>
+              <th className="border border-slate-600 rounded-md">Title</th>
+              <th className="border border-slate-600 rounded-md">Author</th>
+              <th className="border border-slate-600 rounded-md">Published Year</th>
+              <th className="border border-slate-600 rounded-md">Operations</th>
             </tr>
           </thead>
           <tbody>
             {books.map((book) => (
-                <tr key={book.id}>
-                <td key ={book.id}>
-                    <Link to={`/book/details/${book.id}`}>{book.title}</Link>
+              <tr key={book._id}>
+                <td className="border border-slate-700 rounded-md text-center">{book.title}</td>
+                <td className="border border-slate-700 rounded-md text-center">{book.author}</td>
+                <td className="border border-slate-700 rounded-md text-center">{book.publishyear}</td>
+
+                <td className="border border-slate-700 rounded-md text-center">
+                  <Link to={`/books/details/${book._id}`}>
+                    <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500 hover:text-blue-700 cursor-pointer mr-2" />
+                  </Link>
+
+                  <Link to = {`/books/edit/${book._id}`}>
+                    <FontAwesomeIcon icon={faEdit} className="text-gray-500 hover:text-gray-700 cursor-pointer mr-2" />
+                  </Link>
+
+                  <Link to = {`/books/delete/${book._id}`}>
+                    <FontAwesomeIcon icon={faTrash} className="text-red-500 hover:text-red-700 cursor-pointer" />
+                  </Link>
+                  
                 </td>
-                <td key ={book.id}>{book.author}</td>
-                <td key ={book.id}>{book.genre}</td>
-                </tr>
+              </tr>
             ))}
-            </tbody>
+          </tbody>
         </table>
       )}
     </div>
