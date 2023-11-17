@@ -40,7 +40,7 @@ const EditBook = () => {
         const data = response.data;
         formdata.author = data.author;
         formdata.title = data.title;
-        formdata.publishyear = data.publishyear;
+        formdata.publishyear = data.publishyear;  
         setLoading(false)
       })
       // Code to execute
