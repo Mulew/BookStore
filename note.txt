@@ -1,0 +1,4 @@
+npm install react-icons
+import { BiArrowBack } from 'react-icons/bi'
+        <BiArrowBack className='text-2xl' />
+
