@@ -1,13 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
+import Back from '../components/Back';
+import { useSnackbar } from 'notistack';
 
 const EditBook = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const {id} = useParams();
+  const {enqueueSnackbar} = useSnackbar();
   const [formdata, setFormdata] = useState({
     title: '',
     author: '',
@@ -28,6 +30,7 @@ const EditBook = () => {
       // Make the API request to create the book
       await axios.put(`http://localhost:8080/books/${id}`, formdata);
       // Redirect to the desired page after successful submission
+      enqueueSnackbar("book edited successfully",{variant: 'success'});
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -50,13 +53,13 @@ const EditBook = () => {
   },[id])
 console.log(id);
   return (
-    <div className='p-4'>
-      <h1 className='text-3xl my-4'>Create Book</h1>
+    <div className='flex flex-col p-4 w-96  mx-auto '>
+      <h1 className='text-3xl my-4'>Create Book</h1><Back/>
 
       {loading ? <Spinner /> 
       :
       
-      ( <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px p-4 mx-auto]'>
+      ( <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px p-4 mx-auto] justify-center'>
       <form onSubmit={handleSubmit}>
         <div className='my-4'>
           <label htmlFor='title' className='text-xl mr-4 text-gray-500'>

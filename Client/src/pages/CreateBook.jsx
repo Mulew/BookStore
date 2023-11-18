@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../components/Spinner';
-
+import { useSnackbar } from 'notistack';
+import Back from '../components/Back';
 const CreateBook = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -11,7 +12,7 @@ const CreateBook = () => {
     author: '',
     publishyear: ''
   });
-
+  const {enqueueSnackbar} = useSnackbar();
   const changevalue = (e) => {
     const { name, value } = e.target;
     setFormdata((prevvalue) => ({
@@ -28,8 +29,10 @@ const CreateBook = () => {
       await axios.post('http://localhost:8080/books', formdata);
 
       // Redirect to the desired page after successful submission
+      enqueueSnackbar("book Created Successfully!",{variant: 'success'});
       navigate('/');
     } catch (error) {
+      enqueueSnackbar("book Created error!",{variant: 'error'});
       console.log(error);
     }
 
@@ -37,7 +40,8 @@ const CreateBook = () => {
   };
 
   return (
-    <div className='p-4'>
+    <div className='p-4 w-96 mx-auto'>
+      <Back/>
       <h1 className='text-3xl my-4'>Create Book</h1>
 
       {loading && <Spinner />}
